@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block body %}
+
+<!-- to create the blurry background -->
+<div class="login-bg">
+    
+</div>
+
+
+
+<div class="form">
+    <h1 class="log-reg">Register</h1>
+
+    <form method="POST">
+    {% csrf_token %}
+        <label >{{ form.username.label }}</label>
+        {{ form.username }}
+
+        <label >{{ form.password1.label }}</label>
+        {{ form.password1 }}
+        
+        <label >{{ form.password2.label }}</label>
+        {{ form.password2 }}
+        
+        <input class="button login-button" type="submit" value="Register">
+    </form>
+
+    <p>Already registered? <a href="{% url 'main:login' %}" style="text-decoration: none; color: aqua;"> Login</a> </p>  
+</div>
+
+
+{% endblock %}

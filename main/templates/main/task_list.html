@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %} {% block body %}
+{% load static %}
+
+<div class="form">
+
+<div class="header">
+  <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3 style="margin: 0">You have <i style="font-weight: bold;">{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3>
+  </div>
+
+  {% if request.user.is_authenticated %}
+  <div>
+    <a href="{% url 'main:logout' %}">Logout</a>
+    <br>
+    <button id="help">Help</button>
+  </div>
+  
+
+  {% else %}
+  <a href="{% url 'main:login' %}">Login</a>
+
+  {% endif %}
+</div>
+
+<div id="search-add-wrapper">
+    <form method="GET" style="display: flex;">
+        <input type='text' name='search-area' placeholder="Search your task" value="{{ search_input }}" autofocus>
+        <input class="button" type="submit" value='Search'>
+    </form>
+    <a id="add-link" href="{% url 'main:task-create' %}">&#x2b;</a>
+</div>
+
+
+<div class="task-items-wrapper">
+    {% for task in tasks %}
+    <div class="task-wrapper">
+        <div class="task-title">
+            {% if task.complete %}
+                <div class="task-complete-icon"></div>
+                <i><s><a href="{% url 'main:task-update' task.id %}">{{task}}</a></s></i> 
+            
+            {% else %}
+                <div class="task-incomplete-icon"></div>
+                <a href="{% url 'main:task-update' task.id %}">{{task}}</a> 
+            {% endif %}
+        </div>
+        <a class="delete-link" href="{% url 'main:task-delete' task.id %}">&#215;</a>
+    </div>
+
+    {% empty %}
+    <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+        <h2>No task.</h2>
+    </div>
+    
+    {% endfor %}
+</div>
+
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let list = document.createElement('ul');
+    let listItem = document.createElement('li');
+    listItem.innerHTML = 'I am your content';
+    list.appendChild(listItem);
+
+    document.querySelector('button').onclick = help;
+
+    function help(){
+        swal({
+            title: "Click on :-",
+            text: "+ to create/add a task, x to delete the task, 'task_name' to edit the task.",
+            icon: "{% static 'main/images/no-face128.png' %}",
+            button: {
+                text: "Got it!"
+            }
+        });
+    }
+
+</script>
+
+{% endblock %}
