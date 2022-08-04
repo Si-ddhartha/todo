@@ -5,4 +5,4 @@ It provides user registration and sign-in, thus a user will be able to see only 
 
 This web app is creted using **Django** as the framework.
 
-It is currently deployed on **Heroku** and can be accessed via ![ToDo list](https://kawaiii-todo-list.herokuapp.com/).
+It is currently deployed on **Heroku** and can be accessed via https://kawaiii-todo-list.herokuapp.com.
